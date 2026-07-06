@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Creative Lab</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0f12;
+      --panel: #16191e;
+      --line: #262b32;
+      --text: #e7e9ec;
+      --muted: #9aa1ab;
+      --accent: #6ee7b7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 72px 24px 96px; }
+    header h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+    }
+    header p { color: var(--muted); font-size: 1.05rem; max-width: 52ch; margin: 0; line-height: 1.6; }
+    .grid {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .18s ease, transform .18s ease;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .thumb {
+      aspect-ratio: 16 / 10;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 30% 30%, #7c5cff55, transparent 60%),
+        radial-gradient(circle at 70% 60%, #6ee7b755, transparent 55%),
+        #0d0f12;
+      border: 1px solid var(--line);
+    }
+    .card h2 { font-size: 1.15rem; margin: 4px 0 0; }
+    .card p { color: var(--muted); font-size: .92rem; margin: 0; line-height: 1.5; }
+    .links { margin-top: auto; display: flex; gap: 16px; padding-top: 6px; }
+    .links a { color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 600; }
+    .links a:hover { text-decoration: underline; }
+    footer { margin-top: 72px; color: var(--muted); font-size: .85rem; }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Creative Lab</h1>
+      <p>A series of small creative-technical experiments. Each one takes a simple idea
+         and pushes it into something you can watch happen in the browser.</p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="thumb"></div>
+        <h2>Shape Painter</h2>
+        <p>Rebuilds any photo out of a few hundred overlapping translucent shapes,
+           then replays the reconstruction as a timelapse.</p>
+        <div class="links">
+          <a href="projects/shape-painter/">Live demo</a>
+          <a href="https://github.com/wielkinader/creative-lab/tree/main/projects/shape-painter">Readme</a>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      Built by Nader. Source on <a href="https://github.com/wielkinader/creative-lab">GitHub</a>.
+    </footer>
+  </div>
+</body>
+</html>
