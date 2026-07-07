@@ -80,6 +80,8 @@ export interface StartMessage {
   budget: number;
   /** Which shape types the optimiser may use. Defaults to all three. */
   enabledTypes?: ShapeType[];
+  /** Shape opacity override (advanced). Defaults to the config value. */
+  alpha?: number;
 }
 
 export interface ProgressMessage {

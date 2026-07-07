@@ -9,11 +9,13 @@ self.onmessage = (e: MessageEvent<StartMessage>) => {
   const msg = e.data;
   if (msg.type !== "start") return;
 
+  const config = msg.alpha != null ? { ...DEFAULT_CONFIG, shapeAlpha: msg.alpha } : DEFAULT_CONFIG;
+
   let lastSimilarity = 0;
   const shapes = runOptimizer(
     msg.target,
     msg.budget,
-    DEFAULT_CONFIG,
+    config,
     {
       onShape: (shape, similarity) => {
         lastSimilarity = similarity;

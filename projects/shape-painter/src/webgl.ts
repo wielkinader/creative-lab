@@ -127,6 +127,16 @@ export class WebGLRenderer {
     gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
   }
 
+  /** Resize the drawing buffer for a new image aspect ratio. */
+  resize(width: number, height: number): void {
+    this.width = width;
+    this.height = height;
+    const canvas = this.gl.canvas as HTMLCanvasElement;
+    canvas.width = Math.round(width * RENDER_SCALE);
+    canvas.height = Math.round(height * RENDER_SCALE);
+    this.gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+
   /** Upload a new shape list and background colour. */
   setShapes(shapes: Shape[], bg: Rgb): void {
     this.bg = bg;
