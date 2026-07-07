@@ -69,7 +69,7 @@ const title = document.createElement("h1");
 title.textContent = "Shape Painter — convergence test";
 title.style.cssText = "font-size:1.5rem;letter-spacing:-.02em;margin:0 0 4px;";
 const sub = document.createElement("p");
-sub.textContent = "Step 2: rectangles only, algorithm in a Web Worker.";
+sub.textContent = "Step 3: rectangles, circles and triangles via scanline coverage.";
 sub.style.cssText = "color:#9aa1ab;margin:0 0 24px;font-size:.9rem;";
 
 const row = document.createElement("div");
@@ -81,7 +81,7 @@ row.append(target.wrap, recon.wrap);
 const controls = document.createElement("div");
 controls.style.cssText = "margin-top:24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;";
 const runBtn = document.createElement("button");
-runBtn.textContent = "Run 300 rectangles";
+runBtn.textContent = "Run 300 shapes";
 runBtn.style.cssText =
   "background:#6ee7b7;color:#0d0f12;border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:.95rem;";
 const status = document.createElement("span");

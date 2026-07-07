@@ -10,19 +10,26 @@ self.onmessage = (e: MessageEvent<StartMessage>) => {
   if (msg.type !== "start") return;
 
   let lastSimilarity = 0;
-  const shapes = runOptimizer(msg.target, msg.budget, DEFAULT_CONFIG, {
-    onShape: (shape, similarity) => {
-      lastSimilarity = similarity;
-      const out: WorkerOutMessage = {
-        type: "progress",
-        count: shape.index + 1,
-        budget: msg.budget,
-        similarity,
-        shape,
-      };
-      (self as unknown as Worker).postMessage(out);
+  const shapes = runOptimizer(
+    msg.target,
+    msg.budget,
+    DEFAULT_CONFIG,
+    {
+      onShape: (shape, similarity) => {
+        lastSimilarity = similarity;
+        const out: WorkerOutMessage = {
+          type: "progress",
+          count: shape.index + 1,
+          budget: msg.budget,
+          similarity,
+          shape,
+        };
+        (self as unknown as Worker).postMessage(out);
+      },
     },
-  });
+    1,
+    msg.enabledTypes,
+  );
 
   const done: WorkerOutMessage = { type: "done", shapes, similarity: lastSimilarity };
   (self as unknown as Worker).postMessage(done);

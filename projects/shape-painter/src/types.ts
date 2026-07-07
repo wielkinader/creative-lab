@@ -9,29 +9,63 @@ export interface Rgb {
   b: number;
 }
 
-/**
- * A committed shape. Geometry is stored in scoring-resolution pixel
- * coordinates but is resolution-independent: to render at full size, scale
- * every coordinate by (fullWidth / scoringWidth). Shapes are the entire
- * output of the algorithm; the image is just a replay of them in order.
- *
- * For step 2 only axis-aligned rectangles exist. Later shape types add their
- * own geometry fields; `type` discriminates.
- */
-export interface Shape {
-  type: ShapeType;
-  /** Axis-aligned bounds, inclusive integer pixel coordinates. */
+// ---- Geometry ----
+// Geometry is stored in scoring-resolution pixel coordinates but is
+// resolution-independent: to render at full size, scale every coordinate by
+// (fullWidth / scoringWidth). Rectangles are axis-aligned (inclusive integer
+// bounds); circles and triangles carry float geometry.
+
+export interface RectGeom {
+  type: "rectangle";
   x0: number;
   y0: number;
   x1: number;
   y1: number;
+}
+
+export interface CircleGeom {
+  type: "circle";
+  cx: number;
+  cy: number;
+  r: number;
+}
+
+export interface TriangleGeom {
+  type: "triangle";
+  ax: number;
+  ay: number;
+  bx: number;
+  by: number;
+  cx: number;
+  cy: number;
+}
+
+export type Geom = RectGeom | CircleGeom | TriangleGeom;
+
+export interface ShapeStyle {
   color: Rgb;
   alpha: number;
   /** Order the shape was committed, starting at 0. */
   index: number;
 }
 
-/** A grayscale-agnostic RGBA raster: length = width * height * 4. */
+/**
+ * A committed shape: its geometry plus colour/alpha/order. Shapes are the
+ * entire output of the algorithm; the image is just a replay of them in order.
+ */
+export type Shape =
+  | (RectGeom & ShapeStyle)
+  | (CircleGeom & ShapeStyle)
+  | (TriangleGeom & ShapeStyle);
+
+/** A single horizontal run of covered pixels on row `y`, from `xa` to `xb`. */
+export interface Span {
+  y: number;
+  xa: number;
+  xb: number;
+}
+
+/** An RGBA raster: length = width * height * 4. */
 export interface Raster {
   width: number;
   height: number;
@@ -44,6 +78,8 @@ export interface StartMessage {
   type: "start";
   target: Raster;
   budget: number;
+  /** Which shape types the optimiser may use. Defaults to all three. */
+  enabledTypes?: ShapeType[];
 }
 
 export interface ProgressMessage {
